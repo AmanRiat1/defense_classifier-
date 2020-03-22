@@ -1,14 +1,14 @@
-﻿html {
+html {
   position: relative;
   min-height: 100%;
-  background: linear-gradient(to bottom, #62A8FB, #5EE5DF);
 }
 
 body {
   margin-bottom: 160px !important; /* Height of the footer */
   padding: 0;
+  background: linear-gradient(to bottom, rgb(20, 172, 167), #93EDC7);
 }
-
+/* #FCB9BA */
 footer {
   position: absolute;
   bottom: 0;
@@ -27,3 +27,4 @@ button:active {
   outline: none !important;
   box-shadow: none !important;
 }
+
