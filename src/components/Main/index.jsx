@@ -7,7 +7,7 @@ const Main = () => {
   return(
     <Card border="light" style={{ borderRadius: '15px'}}>
     <Card.Body>
-      <Card.Title>Select NBA Player</Card.Title>
+      <Card.Title>Select Person</Card.Title>
       <Card.Text>
         Some quick example text to build on the card title and make up the bulk
         of the card's content.
