@@ -57,3 +57,10 @@ if __name__ == '__main__':
         p.start()
     for process in processes:
         process.join()
+
+    # csv_list = ['307.csv', '614.csv', '921.csv', '1228.csv']
+    # train_df = pd.read_csv('0.csv')
+    # for x in csv_list:
+    #     train_df = train_df.append(pd.read_csv(x), ignore_index=True)
+    # train_df = train_df.drop(['TEAM', 'AGE', 'Name', 'SEASON', 'LEAGUE', 'POS'], axis=1)
+    # train_df.to_csv('train.csv')

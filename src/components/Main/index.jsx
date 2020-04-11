@@ -1,16 +1,29 @@
-﻿import React from "react";
-import styles from "./main.module.css";
+﻿import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card'
-import CardDeck from 'react-bootstrap/CardDeck'
 
 const Main = () => {
+  let player = "Matisse Thybulle";
+  const  [hasError, setErrors] =  useState(false);
+  const  [prediction, setprediction ]= useState({});
+
+  async function fetchData() {
+    const res = await fetch(`http://localhost:3001/predict/${player}`);
+    res
+      .json()
+      .then(res => setprediction(res))
+      .catch(err => setErrors(err));
+  }
+
+  useEffect(() => {
+    fetchData();
+  });
+
   return(
     <Card border="light" style={{ borderRadius: '15px'}}>
     <Card.Body>
-      <Card.Title>Select Person</Card.Title>
+      <Card.Title>{player}</Card.Title>
       <Card.Text>
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+        {player} has a {JSON.stringify(prediction)}% of making an all defense team.
       </Card.Text>
     </Card.Body>
   </Card>
