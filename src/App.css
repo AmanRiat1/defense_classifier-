@@ -4,9 +4,11 @@ html {
 }
 
 body {
+  font-family: 'Oswald';
   margin-bottom: 160px !important; /* Height of the footer */
   padding: 0;
   background: linear-gradient(to bottom, #2BC0E4, #EAECC6);
+  
 }
 /* #FCB9BA */
 footer {

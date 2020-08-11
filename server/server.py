@@ -2,7 +2,7 @@ from flask import Flask, jsonify, make_response, send_from_directory
 import os
 os.chdir(os.getcwd() + '/server') 
 from os.path import exists, join
-from basketball_reference_scraper.players import get_stats
+from basketball_reference_scraper.players import get_stats, get_player_headshot
 from model import DefenseClassifier
 from constants import CONSTANTS
 from flask_cors import CORS
@@ -32,7 +32,12 @@ def page_not_found(error):
 def get_prediction(name):
     rookie_dataframe = get_stats(name, stat_type='ADVANCED', playoffs=False, career=False)
     player_classification = model.predict(rookie_dataframe.loc[0:0])
-    return player_classification
+    return json.dumps({'playerPrediction':player_classification})
+
+@app.route('/player-image/<name>')
+def get_player_thumbnail(name):
+    player_picture_url = get_player_headshot(name)
+    return json.dumps({'imageLink':player_picture_url})
 
 @app.route('/rookies')
 def get_rookies():
@@ -47,7 +52,6 @@ def get_rookies():
         if len(row_text) != 0:
             rookies.append(row_text[0].getText())
     
-    print (rookies)
     return json.dumps({'rookies':rookies})
 
 
