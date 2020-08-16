@@ -2,3 +2,4 @@ flask==1.1.1
 basketball_reference_scraper
 flask-cors
 sklearn
+bs4

@@ -8,6 +8,8 @@ body {
   margin-bottom: 160px !important; /* Height of the footer */
   padding: 0;
   background: linear-gradient(to bottom, #2BC0E4, #EAECC6);
+  /* background: linear-gradient(to bottom, #661884, #2C2050);
+   */
   
 }
 /* #FCB9BA */
@@ -30,3 +32,9 @@ button:active {
   box-shadow: none !important;
 }
 
+.center {
+  padding-top: 20px;
+  display: grid;
+  place-items: center;
+  height:100vh;  
+}

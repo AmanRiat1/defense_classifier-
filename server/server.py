@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, make_response, send_from_directory
 import os
-os.chdir(os.getcwd() + '/server') 
 from os.path import exists, join
 from basketball_reference_scraper.players import get_stats, get_player_headshot
 from model import DefenseClassifier
@@ -10,6 +9,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import json
 
+os.chdir(os.getcwd() + '/server') 
 app = Flask(__name__, static_folder='build')
 CORS(app)
 model = DefenseClassifier()
@@ -21,12 +21,6 @@ model = DefenseClassifier()
 def catch_all(path):
     file_to_serve = path if path and exists(join(app.static_folder, path)) else 'index.html'
     return send_from_directory(app.static_folder, file_to_serve)
-
-# Error Handler
-@app.errorhandler(404)
-def page_not_found(error):
-    json_response = jsonify({'error': 'Page not found'})
-    return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
 
 @app.route('/predict/<name>')
 def get_prediction(name):
@@ -53,6 +47,15 @@ def get_rookies():
             rookies.append(row_text[0].getText())
     
     return json.dumps({'rookies':rookies})
+
+# Error Handler
+@app.errorhandler(500)
+def internal_error(error):
+    return "500 error"
+
+@app.errorhandler(404)
+def not_found(error):
+    return "404 error",404
 
 
 if __name__ == '__main__':

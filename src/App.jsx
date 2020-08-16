@@ -1,23 +1,28 @@
-﻿  import React from "react";
-import { Switch, Route } from "react-router-dom";
+﻿import React, { useState} from 'react';
 import "./App.css";
 import NavBar from "./components/NavBar";
-import Main from "./components/Main";
+import ContentCard from "./components/ContentCard";
+import GlobalStyles from "./components/Globalstyle/globalStyles.js";
+import { lightTheme, darkTheme } from "./components/Themes/theme.js"
+import {ThemeProvider} from "styled-components";
 
-//TODO Web Template Studio: Add routes for your new pages here.
 const App = () => {
+  const [theme, setTheme] = useState(lightTheme);
+  const themeToggler = () => {
+    theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme)
+  }
   return (
+    <ThemeProvider theme={theme}>
+    <>
+    <GlobalStyles/>
     <div>
-      <div>
-        <NavBar/>
-      </div>
-      <div style={{
-        position: 'absolute', left: '50%', top: '50%',
-        transform: 'translate(-50%, -50%)'
-        }}>
-        <Main/>
-      </div>
+      <div><NavBar toggleTheme={themeToggler} currentTheme={theme}/></div>
+      <main className="container center">
+        <ContentCard currentTheme={theme}/>
+      </main>
     </div>
+    </>
+    </ThemeProvider>
   );
 }
 
