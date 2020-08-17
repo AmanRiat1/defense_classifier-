@@ -2,24 +2,25 @@ from flask import Flask, jsonify, make_response, send_from_directory
 import os
 from os.path import exists, join
 from basketball_reference_scraper.players import get_stats, get_player_headshot
-from .model import DefenseClassifier
-from .constants import CONSTANTS
+from model import DefenseClassifier
+from constants import CONSTANTS
 from flask_cors import CORS
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import json
 
-
-os.chdir(os.getcwd() + '/server') 
+# os.chdir(os.getcwd() + '/server') 
 app = Flask(__name__, static_folder='build', static_url_path='/')
 CORS(app)
 model = DefenseClassifier()
 
 # Catching all routes
 # This route is used to serve all the routes in the frontend application after deployment.
-@app.route('/')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
 def catch_all(path):
-    return app.send_static_file('index.html')
+    file_to_serve = path if path and exists(join(app.static_folder, path)) else 'index.html'
+    return send_from_directory(app.static_folder, file_to_serve)
 
 @app.route('/api/predict/<name>')
 def get_prediction(name):
@@ -58,4 +59,4 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(port=CONSTANTS['PORT'])
+    app.run(port=CONSTANTS['PORT'], host='0.0.0.0')
