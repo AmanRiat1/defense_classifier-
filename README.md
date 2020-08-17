@@ -1,75 +1,23 @@
-﻿## Getting Started
+# NBA All Defensive Team Classifier 
 
-In the root directory of the project...
+This is a small project that uses a Random Forest model to make predictions on a player's chances to make an All Defensive Team solely from their rookie season data. A flask app makes up the backend and serves a React frontend. Currently the searchable players are the rookies of the 2019-20 season. 
 
-1. Install node modules `yarn install` or `npm install`.
-2. Install Python dependencies `yarn install-requirements` or `npm install-requirements`
-2. Start development server `yarn start` or `npm start`.
+The live website can be found [here](https://nba-all-defense.herokuapp.com/)
+
+## Methodology 
+
+Using [sklearn's](https://scikit-learn.org/stable/about.html#citing-scikit-learn) Random Forest Classifier, a model was developed. Training data consisted mainly around advanced defensive stats along with basic box score stats to potentially filter out outliers. 
+
+The original dataset consists of around 1400 players and their rookie season data with an additional column indicating if they had made an all defensive team. The dataset was further filtered down to around 200 players. Of the selected 200 players, a little more than 50% consisted of players who did not make an all defensive team throughout thier playing career. This was done to introduce a bias in classyifing players to not make an all defensive team as the majority of players in the NBA do not make an all defensive team. 
+
+Beyond this step the data was further filtered to reduce the amount of features through feature selection and grid search. The final step was to test out different models through testing methods like KFold, cross validation scoring and scaling features. The Random Forest Classifier provided the best results out of the tested models and was selected. More information on the training and selection of the model can be found in the [jupyter notebook](https://github.com/AmanRiat1/nba_all_defense_classifier/blob/master/data/data_exploration.ipynb) 
+
+The model classifies a player as 1 or 0 which represents whether a player will make an all defensive team or not. The value returned to the frontend is the probability estimate which provides a better understanding as to the players chance to make an all defensive team. 
+
+## General Structure
+A flask server makes up the backend providing endpoints to get a list of the current years rookies, get player images, and provide model predictions. The React frontend is served as static files through the flask server and makes calls to the API endpoints. 
 
 ## Next Steps
+The next step is to improve the model. The current training dataset consists of randomly selected players who did not make an all defensive team. This section of the dataset could potentially be filled with players who could skew the models results. For example, if the majority consists of players who did not play a huge amount of games/minutes, the model would be biased towards classifying players with similar stats as not making an all defensive team. 
 
-
-### Adding a New Page
-
-1. Create a folder in `/src/components` with your react components.
-2. Add a route for your page to `/src/App.js`.
-3. Add a button to the navigation bar in `/src/components/NavBar/index.js`.
-
-
-### Deployment
-
-If you selected Azure App Service when creating your project, follow these steps:
-
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Web Template Studio: Deploy App` to start deploying your app.
-2. After your project is built, click on "server" in the pop up on the top middle section of your screen, and then click "Deploy" on the window pop up.
-3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
-
-If you did not select Azure App Service and want to create a new Azure App Service web app, follow these steps:
-
-1. Press `Ctrl + Shift + P` in Windows/Linux or `Shift ⇧ + Command ⌘ + P` in Mac and type/select `Azure App Service: Create New Web App...` to create a new web app.
-   - Select your subscription
-   - Enter your web app name
-   - Select Linux as your OS
-   - Select Node.js 10.14 for a Node/Express application, Python 3.7 for a Flask application
-2. Once the creation is done, click "Deploy" in the notification window on the lower right corner.
-   - Click "Browse" on the top middle section of your screen and select the server folder within your project
-   - Click "Yes" in the notification window on the lower right corner (build prompt)
-   - Click "Deploy" on the window pop up
-   - Click "Yes" in the notification window on the lower right corner again
-3. Once the deployment is done, click "Browse website" in the notification window on the lower right corner to check out your newly deployed app.
-
-Consider adding authentication and securing back-end API's by following [Azure App Service Security](https://docs.microsoft.com/en-us/azure/app-service/overview-security).
-
-Full documentation for deployment to Azure App Service can be found here: [Deployment Docs](https://github.com/Microsoft/WebTemplateStudio/blob/dev/docs/deployment.md).
-
-## File Structure
-
-The front-end is based on [create-react-app](https://github.com/facebook/create-react-app).
-
-The back-end is based on [Flask](https://github.com/pallets/flask).
-
-The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/.
-
-```
-.
-├── src - React front-end
-│ ├── components - React components for each page
-│ ├── App.jsx - React routing
-│ └── index.jsx - React root component
-├── server/ - Flask server that provides API routes and serves front-end
-│ ├── constants.py - Defines the constants for the endpoints and port
-│ └── server.py - Configures Port and HTTP Server and provides API routes
-└── README.md
-```
-
-## Additional Documentation
-
-
-- React - https://reactjs.org/
-- React Router - https://reacttraining.com/react-router/
-
-- Bootstrap CSS - https://getbootstrap.com/
-- Flask - http://flask.pocoo.org/
-
-
-  This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
+Another improvement could be to add a model zoo which would provide more robust results. 
