@@ -1,1 +1,1 @@
-web: gunicorn app:all_defense_classifier
+web: gunicorn server.server:app
