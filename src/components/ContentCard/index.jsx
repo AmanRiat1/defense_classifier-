@@ -22,7 +22,7 @@ const ContentCard = (props) => {
   const [thumbnail, setThumbnail] = useState("0");
 
   useEffect(() => {
-    fetch("http://localhost:3001/rookies")
+    fetch("/api/rookies")
       .then(res => res.json())
       .then(
         (result) => {
@@ -37,7 +37,7 @@ const ContentCard = (props) => {
   }, [])
 
   const getPlayerImage = (name) => {
-    fetch(`http://localhost:3001/player-image/${name}`)
+    fetch(`/api/player-image/${name}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -51,7 +51,7 @@ const ContentCard = (props) => {
   }
 
   const getPlayerPrediction = (name) =>{
-    fetch(`http://localhost:3001/predict/${name}`)
+    fetch(`/api/predict/${name}`)
       .then(res => res.json())
       .then(
         (result) => {

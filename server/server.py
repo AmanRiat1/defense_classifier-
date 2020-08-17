@@ -9,30 +9,30 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import json
 
+
+os.chdir(os.getcwd() + '/server') 
 app = Flask(__name__, static_folder='build', static_url_path='/')
 CORS(app)
 model = DefenseClassifier()
 
 # Catching all routes
 # This route is used to serve all the routes in the frontend application after deployment.
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route('/')
 def catch_all(path):
-    file_to_serve = path if path and exists(join(app.static_folder, path)) else 'index.html'
-    return send_from_directory(app.static_folder, file_to_serve)
+    return app.send_static_file('index.html')
 
-@app.route('/predict/<name>')
+@app.route('/api/predict/<name>')
 def get_prediction(name):
     rookie_dataframe = get_stats(name, stat_type='ADVANCED', playoffs=False, career=False)
     player_classification = model.predict(rookie_dataframe.loc[0:0])
     return json.dumps({'playerPrediction':player_classification})
 
-@app.route('/player-image/<name>')
+@app.route('/api/player-image/<name>')
 def get_player_thumbnail(name):
     player_picture_url = get_player_headshot(name)
     return json.dumps({'imageLink':player_picture_url})
 
-@app.route('/rookies')
+@app.route('/api/rookies')
 def get_rookies():
     url = "https://www.basketball-reference.com/leagues/NBA_2020_rookies.html"
     html = urlopen(url)
