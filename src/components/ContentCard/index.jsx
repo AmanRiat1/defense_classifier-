@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Circle from 'react-circle';
 import { makeStyles } from "@material-ui/core/styles";
-import { PatchQuestion } from 'react-bootstrap-icons';
+import { BsQuestionCircle } from 'react-icons/bs';
 
 /**
  * Components that renders the main card pertaining information to the player's probability of making an all defense team
@@ -14,6 +14,8 @@ import { PatchQuestion } from 'react-bootstrap-icons';
  */
 const ContentCard = (props) => {
   const [error, setError] = useState(null);
+  const [playerError, setPlayerError] = useState("")
+  const [selectedPlayer, setSelectedPlayer] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [rookies, setRookies] = useState([]);
   const [defenseProbability, setDefenseProbability] =  useState();
@@ -54,9 +56,10 @@ const ContentCard = (props) => {
       .then(
         (result) => {
           setDefenseProbability(result.playerPrediction);
-          
+          setPlayerError(0);
         },
         (error) => {
+          setPlayerError(1);
           setDefenseProbability("0");
         }
       )
@@ -69,14 +72,28 @@ const ContentCard = (props) => {
       "&  .MuiOutlinedInput-notchedOutline": {
         borderColor: props.currentTheme.text
       },
+      fontFamily: "Consolas",
+      ".MuiAutocomplete-listbox": {
+        fontFamily: "Consolas",
+      }
     }
   }));
   
   const classes = useStyles();
 
+  const displayPlayerMessage = () =>{
+    if (selectedPlayer === "" || selectedPlayer === null){
+      return "";
+    }else if (playerError === 1){
+      return `Sorry we couldn't gather enough information on ${selectedPlayer}`;
+    }else{
+      return `${selectedPlayer} has a ${defenseProbability}% chance of making an all defensive team`;
+    }
+  }
+
   const getPlayerIcon = () =>{
     if (thumbnail === "0"){
-      return <PatchQuestion size={180}/>;
+      return <BsQuestionCircle size={180}/>;
     }else{
       return (<Image src={thumbnail} style = {{"border": '1px solid black'}} rounded />);
     }
@@ -96,12 +113,13 @@ const ContentCard = (props) => {
           <Autocomplete
             classes={classes}
             onChange={(event, newSelectedRookie) => {
+              setSelectedPlayer(newSelectedRookie);
               getPlayerImage(newSelectedRookie);
               getPlayerPrediction(newSelectedRookie);
             }}
             id="combo-box-demo"
             options={rookies}
-            renderInput={(params) => <TextField {...params}  variant="outlined" />}
+            renderInput={(params) => <TextField {...params} variant="outlined" />}
           />
           <br></br>
           <Row>
@@ -109,8 +127,8 @@ const ContentCard = (props) => {
             <Col >
               <div style={{justifyContent: "center"}}>
                 <Circle
-                  lineWidth={14} 
-                  size={200}
+                  lineWidth={32} 
+                  size={190}
                   progress={defenseProbability} 
                   progressColor="maroon"  
                   bgColor="moccasin" 
@@ -123,6 +141,8 @@ const ContentCard = (props) => {
               </div>
             </Col>
           </Row>
+          <br></br>
+          <Row style={{justifyContent:"center", fontFamily: "Consolas"}}>{displayPlayerMessage()}</Row>
         </Card.Body>
         </Card>
       </Container>

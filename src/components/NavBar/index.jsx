@@ -1,6 +1,8 @@
 ﻿import React from "react";
 import {Navbar, Nav, Row, Col } from 'react-bootstrap'
 import Switch from '@material-ui/core/Switch';
+import ReactLogo from "./bball.svg"
+import { GoMarkGithub } from "react-icons/go";
 
 /**
  * Components that renders the navbar 
@@ -9,13 +11,32 @@ import Switch from '@material-ui/core/Switch';
  */
 const NavBar = (props) => {
   return (
-    <Navbar style={{backgroundColor: props.currentTheme.contentColor}}>
-      <Navbar.Brand style={{ fontSize : "25px", color: props.currentTheme.text}} href="#home">Aman Riat</Navbar.Brand>
-      <Nav className="ml-auto">
+    <Navbar variant={props.currentTheme.text === "#363537" ? "light" : "dark"} expand="lg" style={{backgroundColor: props.currentTheme.contentColor}}>
+      <Row>
+        <Col>
+      <Navbar.Brand style={{color: props.currentTheme.text}} href="#home">
+        <img
+          alt=""
+          src={ReactLogo}
+          width="30"
+          height="30"
+          className="logo d-inline-block align-top"
+        />{' '}
+        All Defensive Team Classifier
+      </Navbar.Brand>
+      </Col>
+      </Row>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" /> 
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link variant="dark" href="https://github.com/AmanRiat1/nba_all_defense_classifier" target="_blank">
+            <GoMarkGithub size={24} className="mr-sm-2" style={{float: "left"}}/> Github
+          </Nav.Link>
+        </Nav>
         <Row>
           <Col>Light<Switch onChange={props.toggleTheme} inputProps={{ 'aria-label': 'primary checkbox' }}/>Dark</Col>
         </Row>
-      </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 }

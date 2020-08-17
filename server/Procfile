@@ -1,0 +1,1 @@
+web: gunicorn app:all_defense_classifier

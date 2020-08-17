@@ -1,0 +1,31 @@
+basketball-reference-scraper==1.0.12
+beautifulsoup4==4.8.2
+bs4==0.0.1
+certifi==2020.6.20
+chardet==3.0.4
+click==7.1.2
+Flask==1.1.2
+Flask-Cors==3.0.8
+gunicorn==20.0.4
+idna==2.8
+itsdangerous==1.1.0
+Jinja2==2.11.2
+joblib @ file:///tmp/build/80754af9/joblib_1594236160679/work
+lxml==4.4.2
+MarkupSafe==1.1.1
+mkl-fft==1.1.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+numpy==1.18.1
+pandas==0.25.3
+python-dateutil==2.8.1
+pytz==2019.3
+requests==2.22.0
+scikit-learn @ file:///C:/ci/scikit-learn_1592853528256/work
+scipy @ file:///C:/ci/scipy_1592930618155/work
+six==1.13.0
+soupsieve==1.9.5
+threadpoolctl @ file:///tmp/tmp9twdgx9k/threadpoolctl-2.1.0-py3-none-any.whl
+urllib3==1.25.10
+Werkzeug==1.0.1
+wincertstore==0.2

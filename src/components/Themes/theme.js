@@ -6,7 +6,7 @@ export const lightTheme = {
     contentColor: '#FFF',
 }
 export const darkTheme = {
-    body: 'linear-gradient(to bottom, #661884, #2C2050)',
+    body: 'linear-gradient(to bottom, #661884, #794a99)',
     text: '#FAFAFA',
     toggleBorder: '#6B8096',
     background: '#999',
