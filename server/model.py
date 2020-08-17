@@ -3,6 +3,7 @@ import pickle
 class DefenseClassifier:
     """Class to load the pickled model and perform operations"""
     def __init__(self):
+        
         self.model = pickle.load( open( "rf_model.p", "rb" ))
         self.input_features = ['BLK%','BPM','DBPM','DRB%','DWS','FTr','G', 'MP','TOV%','VORP']
     
