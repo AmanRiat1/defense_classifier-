@@ -23,6 +23,6 @@ scipy
 six==1.13.0
 soupsieve==1.9.5
 threadpoolctl
-urllib3==1.25.10
+urllib3==1.26.5
 Werkzeug==1.0.1
 wincertstore==0.2
